@@ -9,6 +9,8 @@ idf_component_register(
         "UserConfigure.cpp"
         "PickupPlugin.cpp"
         "FFT.cpp"
+        "AutoPitch.cpp"
+        "PluckDetector.cpp"
         "RecordTemporarily.cpp"
         "driver/BluetoothCustomService.cpp"
         "driver/BluetoothManager.cpp"

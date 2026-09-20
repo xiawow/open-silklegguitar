@@ -1,9 +1,9 @@
-# 丝腿吉他开源版本
+# 丝腿吉他 (Silk Leg Guitar) —— 逆向重建源码工程
 
 > 对一台 ESP32 蓝牙吉他效果器固件（`丝腿吉他.bin`，1214176 字节，MD5
 > `C602E9F66AE6141404AD996ACFC3A0AD`）与其 Web 蓝牙控制前端（原站
 > `https://dashichang.work/_612/` 镜像）的完整逆向 + 源码重建。
->  安全发现见 §6。
+> CTF 模拟实战项目 —— 安全发现见 §6。
 
 ## 1. 目录结构
 
@@ -29,14 +29,20 @@ silk-leg-guitar-src/
 │       ├── UserConfigure.*     TLV 配置存取 (0xE45B901F)
 │       ├── SilkLegGuitar.*     模块/输出切换 GPIO 序列 + 电机
 │       ├── PickupPlugin.*      插件格式解析 (LE 头+重定位+0xCC 对齐)
-│       ├── FFT.*               朴素 DFT 占位
+│       ├── FFT.*               radix-2 实 FFT + IFFTReal (固件断言串实锤接口)
 │       ├── RecordTemporarily.* 临时录音缓冲
-│       ├── AutoPitch.h         纯桩 (算法被 NDEBUG 裁剪, 不可恢复)
-│       ├── PluckDetector.h     纯桩 (同上)
+│       ├── AutoPitch.*         ★★★★☆ 音符播放引擎 (标识符/断言/printf 全实锤;
+│       │                         包络形状与 mp3 解码器 ◐)
+│       ├── PluckDetector.*     ★★★★☆ 拨弦检测 (Go 四出参 / ±12 邻域峰判定 /
+│       │                         65:33 起振魔数 全实锤; 窗长与历史窗 ◐)
 │       └── driver/             GATT 服务 / 栈管理 / A2DP / I2S
 └── docs/
     ├── 丝腿吉他_ESP32固件逆向分析报告.md    固件 RE 总报告
     └── 丝腿吉他_前端JS逆向报告.md           前端 JS RE 报告 (协议全貌)
+
+tests/
+└── test_dsp.cpp            DSP 宿主测试 (26 项检查: FFT 往返 / 拨弦检测触发
+                             与音高 / 自动乐器包络逐点核对与超长告警分支)
 ```
 
 ## 2. 置信度状态矩阵
@@ -122,7 +128,7 @@ CurrentOutput）负载是**原始 ASCII**；录音响应是 `[i32 BE 采样率][
 **例外声明**：以下主体**不获得**本软件的任何授权，不得使用、复制、修改、
 分发本软件或其衍生作品：
 
-- **赵磊**（GitHub: https://github.com/zhaoleicpp ）——由于此人过于**死妈傻逼** 且此人多次侵犯本人知识产权。因此不予授权
+- **赵磊**（GitHub: https://github.com/zhaoleicpp ）——此人多次侵犯本人知识产权。
 
 除上述主体外，任何个人或组织均可按 GPLv3 协议自由使用本软件。
 版权所有 © 2026 xiawow
