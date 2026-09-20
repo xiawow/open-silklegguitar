@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html lang="_8416-_8417">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_8418" content="width=device-width, initial-scale=1.0">
+    <title>__hanzhi_xv_qqgc__hanzhi_xv_ldub__hanzhi_xv_whlb__hanzhi_xv_ifob__hanzhi_xv_fsjb</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .banner {
+            position: relative;
+            width: 100vw;
+            height: 155px;
+            background: transparent;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient( to bottom, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0.35) 100% );
+            pointer-events: none;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="_719" id="_719">
+        <canvas id="_720"></canvas>
+        <div class="_8419"></div>
+    </div>
+
+    <script>
+        const _720 = document.getElementById('_720');
+        const _2439 = _720.getContext('2d', { _8420: true });
+        let width, height;
+
+        function _8421()
+        {
+            width = window.innerWidth;
+            height = 155;
+            _720.width = width;
+            _720.height = height;
+        }
+
+        
+        class _8422
+        {
+            constructor()
+            {
+                this._8423();
+            }
+            _8423()
+            {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 3.2 + 4.1;
+                this._8424 = Math.random() * 1.4 - 0.7;
+                this._8425 = Math.random() * 1.1 - 0.55;
+                this._8426 = Math.random() * 280 + 170;
+                this.opacity = Math.random() * 0.78 + 0.45;
+                this._8427 = Math.random() * 900 + 700;
+            }
+            _8428()
+            {
+                this.x += this._8424;
+                this.y += this._8425;
+                this._8427--;
+
+                if (this.x < 0 || this.x > width) this._8424 *= -1.05;
+                if (this.y < 0 || this.y > height) this._8425 *= -1.05;
+
+                
+                this.opacity = Math.max(0.7, Math.min(1, this.opacity + (Math.random() - 0.5) * 0.025));
+
+                if (this._8427 <= 0) this._8423();
+            }
+            _8429()
+            {
+                _2439._8430();
+                _2439._8431 = this.opacity;
+                _2439._8432 = 20;
+                _2439._8433 = _8434({this._8426}, 100%, 65%);
+                _2439._8435 = _8434({this._8426}, 96%, 72%);     
+                _2439._8436();
+                _2439._8437(this.x, this.y, this.size, 0, Math.PI * 2);
+                _2439.fill();
+
+                _2439._8435 = 'rgba(255,255,255,0.85)';
+                _2439._8432 = 6;
+                _2439._8436();
+                _2439._8437(this.x - 0.7, this.y - 0.7, this.size * 0.35, 0, Math.PI * 2);
+                _2439.fill();
+                _2439._8438();
+            }
+        }
+
+        let _724 = [];
+        let _8439 = [];
+
+        class _8440
+        {
+            constructor()
+            {
+                this._8423();
+            }
+            _8423()
+            {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height * 0.75;
+                this.size = Math.random() * 16 + 13;
+                this._1764 = Math.random() * Math.PI * 2;
+                this._8441 = (Math.random() - 0.5) * 0.012;
+                this.opacity = Math.random() * 0.22 + 0.7;   
+                this._8426 = Math.random() * 60 + 190;
+            }
+            _8428()
+            {
+                this._1764 += this._8441;
+                this.y += 0.25;
+                if (this.y > height + 40) this._8423();
+            }
+            _8429()
+            {
+                _2439._8430();
+                _2439._8442(this.x, this.y);
+                _2439._8443(this._1764);
+                _2439._8431 = this.opacity;
+                _2439._8444 = _8434({this._8426}, 90%, 65%);   
+                
+                _2439._8445 = 2.8;
+                _2439._8432 = 16;
+                _2439._8433 = _8434({this._8426}, 95%, 58%);
+
+                _2439._8436();
+                for (let _1119 = 0; _1119 < 6; _1119++)
+                {
+                    const _8446 = (_1119 * Math.PI) / 3;
+                    _2439._8447(Math.cos(_8446) * this.size, Math.sin(_8446) * this.size);
+                }
+                _2439._8448();
+                _2439.stroke();
+                _2439._8438();
+            }
+        }
+
+        function _8449()
+        {
+            _724 = [];
+            _8439 = [];
+
+            const _8450 = Math.floor(width / 20) + 18;
+            for (let _1119 = 0; _1119 < _8450; _1119++)
+            {
+                _724.push(new _8422());
+            }
+
+            const _8451 = Math.floor(width / 180) + 4;
+            for (let _1119 = 0; _1119 < _8451; _1119++)
+            {
+                _8439.push(new _8440());
+            }
+        }
+
+        function _8452()
+        {
+            _2439._8430();
+            _2439._8445 = 1.1;
+
+            const _8453 = Math.min(45, _724.length * 2);
+            let _1788 = 0;
+
+            for (let _1119 = 0; _1119 < _724.length; _1119++)
+            {
+                for (let _1362 = _1119 + 1; _1362 < _724.length && _1788 < _8453; _1362++)
+                {
+                    const _1016 = _724[_1119].x - _724[_1362].x;
+                    const _1017 = _724[_1119].y - _724[_1362].y;
+                    const _8454 = Math._8455(_1016, _1017);
+
+                    if (_8454 < 135)
+                    {
+                        const _8420 = 0.4+(1 - _8454 / 135) * 0.35;   
+                        _2439._8444 = _8456({(_724[_1119]._8426 + _724[_1362]._8426) / 2}, 90%, 62%, {_8420});
+                        _2439._8432 = 7;
+                        _2439._8433 = 'rgba(100, 180, 255, 0.45)';
+                        _2439._8436();
+                        _2439._8457(_724[_1119].x, _724[_1119].y);
+                        _2439._8447(_724[_1362].x, _724[_1362].y);
+                        _2439.stroke();
+                        _1788++;
+                    }
+                }
+            }
+            _2439._8438();
+        }
+
+        function _8458()
+        {
+            const _8190 = Date.now() * 0.0015;
+            _2439._8430();
+            _2439._8445 = 2.2;
+
+            for (let _1119 = 0; _1119 < 3; _1119++)
+            {
+                const y = (height * (0.22 + _1119 * 0.28)) + Math.sin(_8190 * 1.1 + _1119) * 14;
+                const _8426 = 190 + _1119 * 28;
+
+                _2439._8444 = _8456({_8426}, 92%, 68%, 0.8);   
+                _2439._8432 = 18;
+                _2439._8433 = _8456({_8426}, 95%, 55%, 0.6);
+
+                _2439._8436();
+                _2439._8457(0, y);
+                for (let x = 0; x < width; x += 48)
+                {
+                    const _1120 = Math.sin(_8190 * 2.8 + x * 0.006 + _1119) * 9;
+                    _2439._8447(x, y + _1120);
+                }
+                _2439.stroke();
+            }
+            _2439._8438();
+        }
+
+        function _8459()
+        {
+            _2439._8444 = 'rgba(140, 190, 255, 0.11)';   
+            _2439._8445 = 1;
+            const _8460 = 52;
+
+            for (let x = 0; x < width; x += _8460)
+            {
+                _2439._8436();
+                _2439._8457(x, 0);
+                _2439._8447(x, height);
+                _2439.stroke();
+            }
+            for (let y = 20; y < height; y += _8460)
+            {
+                _2439._8436();
+                _2439._8457(0, y);
+                _2439._8447(width, y);
+                _2439.stroke();
+            }
+        }
+
+        function _8461()
+        {
+            _2439._8462(0, 0, width, height);
+            _8459();
+
+            for (let _1977 of _8439)
+            {
+                _1977._8428();
+                _1977._8429();
+            }
+
+            for (let _8463 of _724)
+            {
+                _8463._8428();
+                _8463._8429();
+            }
+
+            _8452();
+            _8458();
+
+            if (Math.random() < 0.008)
+            {
+                const _8464 = width * Math.random();
+                const _8465 = height * Math.random();
+                let _8466 = 12;
+                const _8467 = setInterval(() =>
+                {
+                    _2439._8430();
+                    _2439._8431 = Math.max(0, 0.38 * (1 - _8466 / 180));
+                    _2439._8444 = _8434(205, 92%, 68%);
+                    _2439._8445 = 3;
+                    _2439._8432 = 28;
+                    _2439._8433 = _2439._8444;
+                    _2439._8436();
+                    _2439._8437(_8464, _8465, _8466, 0, Math.PI * 2);
+                    _2439.stroke();
+                    _2439._8438();
+                    _8466 += 11;
+                    if (_8466 > 190) clearInterval(_8467);
+                }, 32);
+            }
+
+            requestAnimationFrame(_8461);
+        }
+
+        function _8468()
+        {
+            _8421();
+            _8449();
+            _8461();
+
+            window.addEventListener('resize', () =>
+            {
+                _8421();
+                _8449();
+            });
+        }
+
+        window.onload = _8468;
+    </script>
+</body>
+</html>

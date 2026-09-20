@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+<html lang="_8416-_8417">
+<head>
+<meta charset="UTF-8">
+<meta name="_8418" content="width=device-width, initial-scale=1.0">
+<title>Luxury Loading</title>
+
+<style>
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:transparent;
+}
+
+.loader{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:320px;
+    height:320px;
+    transform:translate(-50%,-50%);
+}
+
+svg{
+    position:absolute;
+    inset:0;
+}
+
+.outerBreath{
+    position:absolute;
+    inset:0;
+    animation:breath 4s ease-in-out infinite;
+}
+
+.core{
+    position:absolute;
+    left:50%;
+    top:50%;
+
+    width:24px;
+    height:24px;
+
+    border-radius:50%;
+
+    transform:translate(-50%,-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            ffffff 0%,
+            a8d8ff 30%,
+            7cc8ff 60%,
+            5fa8ff 100%
+        );
+
+    box-shadow:
+        0 0 12px rgba(95,168,255,.45),
+        0 0 24px rgba(95,168,255,.25);
+
+    animation:
+        corePulse 2.5s ease-in-out infinite;
+}
+
+.loadingText{
+
+    position:absolute;
+
+    width:100%;
+
+    bottom:-45px;
+
+    text-align:center;
+
+    font-family:
+        "_8469 _8470",
+        sans-serif;
+
+    font-size:17px;
+
+    letter-spacing:5px;
+
+    color:6c7d93;
+
+    animation:textFade 2s infinite;
+}
+
+canvas{
+    position:absolute;
+    inset:0;
+}
+
+keyframes breath{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.05);
+    }
+}
+
+keyframes corePulse{
+
+    0%,100%{
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+
+    50%{
+        transform:
+            translate(-50%,-50%)
+            scale(1.4);
+    }
+}
+
+keyframes textFade{
+
+    0%,100%{
+        opacity:.35;
+    }
+
+    50%{
+        opacity:1;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="_8471">
+
+    <div class="_8472">
+
+        <svg id="_723"
+             width="320"
+             height="320">
+        </svg>
+
+    </div>
+
+    <canvas id="_724"
+            width="320"
+            height="320">
+    </canvas>
+
+    <div class="_8473"></div>
+
+    <div class="_8474">
+        LOADING
+    </div>
+
+</div>
+
+<script>
+
+const _2483 =
+document.getElementById(
+    "_723"
+);
+
+function _8475(
+    _8466,
+    width,
+    color,
+    _8476,
+    _6707,
+    _8477
+)
+{
+    const _8437 =
+    document._8478(
+        "http://www.w3.org/2000/svg",
+        "path"
+    );
+
+    _8437.setAttribute(
+        "fill",
+        "none"
+    );
+
+    _8437.setAttribute(
+        "stroke",
+        color
+    );
+
+    _8437.setAttribute(
+        "stroke-width",
+        width
+    );
+
+    _8437.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    _8437.style.filter=
+        _8479-_8480(0 0 4px {color});
+
+    _2483.appendChild(
+        _8437
+    );
+
+    function _8429(_1764)
+    {
+        const _848 =
+            _1764 *
+            Math.PI / 180;
+
+        const _8481 =
+            (_1764+_8476) *
+            Math.PI / 180;
+
+        const x1 =
+            160 +
+            Math.cos(_848)*_8466;
+
+        const y1 =
+            160 +
+            Math.sin(_848)*_8466;
+
+        const x2 =
+            160 +
+            Math.cos(_8481)*_8466;
+
+        const y2 =
+            160 +
+            Math.sin(_8481)*_8466;
+
+        _8437.setAttribute(
+            "d",
+            
+            _1997 {x1} {y1}
+            A {_8466} {_8466}
+            0 0 1
+            {x2} {y2}
+            
+        );
+    }
+
+    const start =
+        _8482.now();
+
+    function _8461(now)
+    {
+        const _1009 =
+            (now-start)/
+            _6707;
+
+        const _1764 =
+            _8477
+            ?
+            360-(_1009*360)%360
+            :
+            (_1009*360)%360;
+
+        _8429(_1764);
+
+        requestAnimationFrame(
+            _8461
+        );
+    }
+
+    requestAnimationFrame(
+        _8461
+    );
+}
+
+
+
+_8475(
+    60,
+    5,
+    "#5FA8FF",
+    85,
+    1800,
+    false
+);
+
+_8475(
+    90,
+    5,
+    "#7CC8FF",
+    70,
+    2500,
+    true
+);
+
+_8475(
+    120,
+    4,
+    "#8DA8FF",
+    95,
+    3300,
+    false
+);
+
+_8475(
+    145,
+    4,
+    "#A8D8FF",
+    60,
+    4200,
+    true
+);
+
+
+
+const _720 =
+document.getElementById(
+    "_724"
+);
+
+const _2439 =
+_720.getContext("2d");
+
+const _8483=[
+    "#5FA8FF",
+    "#7CC8FF",
+    "#8DA8FF",
+    "#A8D8FF"
+];
+
+const _724=[];
+
+for(let _1119=0;_1119<40;_1119++)
+{
+    _724.push({
+
+        _8466:
+            70+
+            Math.random()*80,
+
+        _1764:
+            Math.random()*
+            Math.PI*2,
+
+        _8484:
+            0.003+
+            Math.random()*0.008,
+
+        size:
+            2+
+            Math.random()*2,
+
+        color:
+            _8483[
+                Math.floor(
+                    Math.random()*_8483.length
+                )
+            ]
+    });
+}
+
+function _8485()
+{
+    _2439._8462(
+        0,
+        0,
+        320,
+        320
+    );
+
+    _724.forEach(_8463=>{
+
+        _8463._1764+=_8463._8484;
+
+        const x=
+            160+
+            Math.cos(_8463._1764)
+            *_8463._8466;
+
+        const y=
+            160+
+            Math.sin(_8463._1764)
+            *_8463._8466;
+
+        for(let _1119=5;_1119>=1;_1119--)
+        {
+            _2439._8436();
+
+            _2439._8437(
+                x-Math.cos(_8463._1764)*_1119*4,
+                y-Math.sin(_8463._1764)*_1119*4,
+                _8463.size,
+                0,
+                Math.PI*2
+            );
+
+            _2439._8435=
+                _8463.color+
+                Math.floor(
+                    18*_1119
+                ).toString(16);
+
+            _2439.fill();
+        }
+
+        _2439._8436();
+
+        _2439._8437(
+            x,
+            y,
+            _8463.size,
+            0,
+            Math.PI*2
+        );
+
+        _2439._8435=
+            _8463.color;
+
+        _2439.fill();
+    });
+
+    requestAnimationFrame(
+        _8485
+    );
+}
+
+_8485();
+
+</script>
+
+</body>
+</html>

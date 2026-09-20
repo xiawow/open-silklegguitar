@@ -1,0 +1,975 @@
+﻿ï»¿<!--
+  丝腿吉他 Web 前端主页面 (dashichang.work/_612 离线镜像, 保持原始文件名可直接运行)
+  BLE 三元组: 设备名 SILK_LEG_GUITAR / Service 0x9578 / Characteristic 0x6710 (与固件一致)
+  关键函数: _8337 连接设备, _715 加载歌曲文件(校验魔数 0x2B047D6A), _8384 调试日志
+  全部符号身份见 SYMBOLS.md; 协议详见 firmware/docs/前端JS逆向报告
+-->
+<meta http-equiv="X-UA-Compatible" content="IE=9" />
+<html>
+<head>
+    <title>L(ä¸è¿åä»)</title>
+    <script src="_262.js"></script>
+    <script src="languages.js"></script>
+    <script src="_613.js"></script>
+    <script src="_731.js"></script>
+    <script src="_19.js"></script>
+    <script src="_27.js"></script>
+    <script src="_267.js"></script>
+    <script src="_22.js"></script>
+    <script src="_729.js"></script>
+    <script src="_730.js"></script>
+    <script src="_10/_11.js"></script>
+    <script src="_716.js"></script>
+</head>
+<body style="margin:0px; overflow-y: hidden;" onkeydown="if (event.code == 'Space') { _8328._8329(); event.preventDefault(); event.stopPropagation(); }">
+    <div>
+        <img src="_721.png" style="position:absolute; left:0px; top:0px; width:100%; height:155px;"/>
+        <iframe src="_718.htm" style="position:absolute; left:0px;top:0px; border:none;width:100%;height:155px;pointer-events: none; z-index:0;"></iframe>
+    </div>
+    <div style="position: absolute; left: 0px; top: 121px;">
+        <span style="white-space: nowrap;">
+            <span id="_614">L(è¿æ¥è®¾å¤)</span>
+            <span id="_615">L(éæ©åè½)</span>
+            <span id="_616">L(èªå¨é³é«ï¼ä¸è¿ï¼)</span>
+            <span id="_617">L(æ¾é³å¨)</span>
+            <span id="_618">L(MIDIè®¾å¤)</span>
+            <span id="_619">L(è¾åºç®¡ç)</span>
+            <span id="_620">L(å¸®å©)</span>
+            <span id="_621">L(è°è¯)</span>
+        </span>
+        <script>
+            var _8330 = new Array();
+            function _8331(_1310)
+            {
+                _1310._8332 = _1310.onclick;
+                _1310.style.display = "inline-block";
+                _1310.style.backgroundColor = "#dddddd"; 
+                
+                _1310.style.borderTopLeftRadius = "10px"; 
+                _1310.style.borderTopRightRadius = "10px"; 
+                _1310.style.borderBottomLeftRadius = "0"; 
+                _1310.style.borderBottomRightRadius = "0"; 
+                _1310.style.paddingLeft = "10px";
+                _1310.style.paddingRight = "10px";
+                _1310.style.paddingTop = "3px";
+                _1310.style.alignItems = "center";
+                _1310.style.cursor = "pointer";
+                _1310.style.userSelect = "none";
+                _1310.style.fontSize = "22px";
+                _1310.onclick = function ()
+                {
+                    for (let _8333 of _8330)
+                    {
+                        if (_8333 == this)
+                        {
+                            
+                            this.style.backgroundColor = "#ffffff"; 
+                            this.style.boxShadow = "inset 0 2px 5px rgba(0, 0, 0, 0.2)"; 
+                            
+                            
+                            this._1308.style.display = this._1308._8334;
+                        }
+                        else
+                        {
+                            
+                            
+                            _8333.style.backgroundColor = "#dddddd";
+                            _8333.style.boxShadow = "inset 0 2px 5px rgba(255, 255, 255, 0.9)";
+                            _8333._1308.style.display = "none";
+                        }
+                    }
+                }
+                _1310._8244 = function ()
+                {
+                    if (this.onclick == null)
+                        return;
+                    this.style.color = "#777777";
+                    this._8335 = this.onclick;
+                    this.onclick = null;
+                    this.style.cursor = "not-allowed";
+                }
+                _1310._1346 = function ()
+                {
+                    if (this.onclick != null)
+                        return;
+                    this.style.color = "black";
+                    this.onclick = this._8335;
+                    this._8335 = null;
+                    this.style.cursor = "pointer";
+                }
+                _8330.push(_1310);
+                _8197._8336(_1310, A("_9750"));
+            }
+            _8331(_614);
+            _8331(_615);
+            _615._8244();
+            _8331(_616);
+            _616._8244();
+            _8331(_617);
+            _617._8244();
+            _8331(_618);
+            _618._8244();
+            _8331(_619);
+            _619._8244();
+            _8331(_620);
+            _620._8244();
+            _8331(_621);
+            _621._8244();
+        </script>
+    </div>
+    <img src="_728.jpg" style="position:absolute; left:0px; top:156px; width: 100%; height: calc(100% - 145px); opacity: 0.2;"/>
+    <span id="_622" style="width: 100%; display: flex; justify-content: center; align-items: center; position: relative;">
+        <span id="_623" style="display:none;position:absolute;left:0px;top:0px;font-size:x-large;color:red;">L(åºä»¶åçº§æåï¼å·²ç»éå¯ï¼è¯·éæ°è¿æ¥...)</span>
+        <iframe id="_624" src="_722.html" style="width: 300px; height: 300px; border:none; display:none;"></iframe>
+        <span id="_625" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border-style: outset; border-width: 2px; width: 400px; height: 100px; padding: 20px; background-color: rgba(0,128,255,0.1); display: none; justify-content: center; align-items: center; flex-direction: column; ">
+            <span id="_626"></span>
+            <script>
+                _1406(_626, 380, 20);
+            </script>
+            <br />
+            <span>L(æ­£å¨è¯»åéç½®...)</span>
+        </span>
+        <button id="_627" style="border-radius: 8px; font-size: 50px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); border: none; cursor: pointer; padding: 20px;" onclick="_623.style.display='none'; _8337();">L(è¿æ¥è®¾å¤)</button>
+        <script>_8197._8336(_627, A("_9751"))</script>
+    </span>
+    <span id="_628" style="">
+        <span style="display:inline-block;">
+            <img id="_629" src="_271.png" style="width: 32px; height: 32px; cursor:pointer;" onclick="_8245();" />
+            <script>_8197._8336(_629, A("_9752"));</script>
+            <span style="font-size:large;">L(è®¾ç½®ä¸ºèªå¨é³é«ï¼ä¸è¿ï¼)</span>
+            <br />
+            <img id="_630" src="_271.png" style="width: 32px; height: 32px; cursor:pointer;" onclick="_8246();" />
+            <script>_8197._8336(_630, A("_9752"));</script>
+            <span style="font-size:large;">L(è®¾ç½®ä¸ºæ¾é³å¨)</span>
+            <br />
+            <img id="_631" src="_271.png" style="width: 32px; height: 32px; cursor:pointer;" onclick="_8247();" />
+            <script>_8197._8336(_631, A("_9752"));</script>
+            <span style="font-size:large;">L(è®¾ç½®ä¸ºMIDIè®¾å¤)</span>
+        </span><br />
+    </span>
+    <span id="_632" style="">
+        <input type="file" id="_633" multiple accept="application/*.bin" onchange="_715();" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);">
+        <label id="_634" for="_633" style="display: inline-block; cursor: pointer; text-align: center;">
+            <img src="_715.png" title="L(å è½½èªå¨ä¹å¨æ°æ®)" style="width:64px;height:64px;" /><br />
+            <span>L(å è½½åä»å¨æ°æ®)</span>
+        </label>
+        <script>_8197._8336(_634, A("_9753"))</script>&nbsp;&nbsp;
+        <script>
+            var _8338 = new Array();
+            var _8271 = null;
+            var _910 = "", _1529 = "", _1530 = "", _1531 = "";
+            function _715()
+            {
+                let files;
+                files = _633.files;
+                let length;
+                length = files.length;
+                if (length < 1)
+                    return;
+                let _6972;
+                _6972 = files[0];
+                
+                let _988;
+                _988 = new FileReader();
+                _988.onload = function (buffer)
+                {
+                    _8271 = new _933();
+                    _8271._1094(buffer.target.result);
+                    _8339(_8271);
+                };
+                _988.readAsArrayBuffer(_6972);
+                _633.value = "";
+            }
+            async function _8339(_6942)
+            {
+                _8338.length = 0;
+                {
+                    let _8340;
+                    _8340 = _6942._1101();
+                    if (_8340 != _1210._8341)
+                    {
+                        alert(L("ä¸æ¯å¤§å¸å±èªå¨ä¹å¨æä»¶ï¼é­æ¯å­ä¸å¯¹ã") + "read " + _8340.toString(16).padStart(8, '0') + ", should be " + _1210._8341.toString(16).padStart(8, '0'));
+                        _8271 = null;
+                        return;
+                    }
+                    let _7768, _7769;
+                    _7768 = _6942._1100();
+                    _7769 = _6942._1100();
+                    let _8342;
+                    _8342 = (BigInt(_7768) << 32n) | BigInt(_7769);
+                    let _8343;
+                    _8343 = ((1n << 32n) | 0n);
+                    if (_8342 > _8343)
+                    {
+                        alert(L("å¤§å¸å±èªå¨ä¹å¨æä»¶ï¼çæ¬å·ä¸æ¯æã") + "read " + _7768 + "." + _7769 + ", should be 1.0");
+                        _8271 = null;
+                        return;
+                    }
+                }
+                let _8344;
+                {
+                    let _1866, _8345;
+                    _1866 = _6942._1100();
+                    console.assert(_1866 == _1202._1869);
+                    _8345 = _6942._1100();
+                    console.assert(_8345 == 1);
+                    _8344 = _6942._1105();
+                    if (_8344 != A("_9754") && _8344 != A("_9755"))
+                    {
+                        alert(L("å¤§å¸å±èªå¨ä¹å¨æä»¶ï¼ä¸æ¯æçåç¼©æ¹å¼ã") + "read " + _8344 + ", should be raw_short or mp3");
+                        _8271 = null;
+                        return;
+                    }
+                }
+
+                _910 = _6942._1104();
+                _1529 = _6942._1104();
+                _1530 = _6942._1104();
+                _1531 = _6942._1104();
+
+                _8338.length = _6942._1100();
+
+                _6942.position = _1210._8259;
+
+                class _8346
+                {
+                    _8347;
+                    _8348;
+                    _8349;
+                    _8350;
+                }
+                _8351 = new Array();
+                for (let _8352 = 0; _8352 < _8338.length; _8352++)
+                {
+                    let _1209 = new _1210();
+                    _8338[_8352] = _1209;
+                    let _8353 = new _8346();
+                    _8351[_8352] = _8353;
+
+                    _1209._1211 = _6942._1100();
+
+                    {
+                        let _8354;
+                        _8354 = _6942._1100(_8354);
+                        _1209._1212 = (_8354 & ~(0x80000000 | 0x40000000));
+                        _1209._1213 = Boolean(_8354 & 0x80000000);
+                        _1209._8355 = Boolean(_8354 & 0x40000000);
+                    }
+
+                    
+                    _8353._8347 = _6942._1100();
+                    _8353._8348 = _6942._1100();
+
+                    
+                    _8353._8349 = _6942._1100();
+                    _8353._8350 = _6942._1100();
+                }
+                let _8356;
+                _8356 = _1210._8259 + _1210._8357;
+                for (let _8352 = 0; _8352 < _8338.length; _8352++)
+                {
+                    let _1209;
+                    _1209 = _8338[_8352];
+                    let _8353;
+                    _8353 = _8351[_8352];
+                    async function _8358(_8359, _8360, _8361)
+                    {
+                        _6942.position = _8356 + _8360;
+                        let _8362 = new _933();
+                        _6942._1106(_8362, _8361);
+                        if (_8344 == A("_9754"))
+                        {
+                            _8359.length = _8361 / 2;
+                            for (let _8363 = 0; _8363 < _8359.length; _8363++)
+                            {
+                                let _8364;
+                                _8364 = _8362._1097();
+                                _8364 = _8364 / 0x7fff;
+                                _8359[_8363] = _8364;
+                            }
+                        }
+                        else if (_8344 == A("_9755"))
+                        {
+                            let _8365;
+                            _8365 = await new Promise(_2303 => _979(_8362._939, function (_985, _1876) { _2303(_985); }, function (error) { ;
+                            _8359.length = 0;
+                            _8359.push(..._8365);
+                        }
+                        else
+                            console.assert(false);
+                    }
+                    await _8358(_1209._1214, _8353._8347, _8353._8348)
+                    await _8358(_1209._1215, _8353._8349, _8353._8350)
+                }
+
+                _8328._8366();
+                _8367();
+            }
+            function _8367()
+            {
+                if (_8271 && _8338.length)
+                {
+                    _878._879(_635, true);
+                    _638.style.display = "";
+                    let _1147;
+                    _1147 = "";
+                    _1147 += L("åå§æä»¶åï¼") + _910 + "<br/>\r\n";
+                    _1147 += L("ä½èï¼") + _1529 + "<br/>\r\n";
+                    _1147 += L("ç»ç»ï¼") + _1530 + "<br/>\r\n";
+                    _1147 += L("è¯´æï¼") + _1531 + "<br/>\r\n";
+                    _639.innerHTML = _1147;
+                }
+                else
+                {
+                    _878._879(_635, false);
+                    _638.style.display = "none";
+                    _639.innerHTML = "";
+                }
+            }
+        </script>
+        <span id="_635" style="display: inline-block; cursor: pointer; text-align: center;" onclick="_714();">
+            <img src="_714.png" title="L(ä¸è½½å°èªå¨ä¹å¨)" style="width:64px;height:64px;" /><br />
+            <span>L(ä¸è½½å°åä»)</span>
+        </span>
+        <script>_8197._8336(_635, A("_9753"))</script>&nbsp;&nbsp;
+        <span id="_636"></span>
+        <script>
+            _1406(_636, 200, 20);
+            _636.style.display = "none";
+        </script>
+        <span id="_637" style="display: none; cursor: pointer; text-align: center;" onclick="_1407();">
+            <img src="_426.png" title="L(åæ¶ä¸è½½å°èªå¨ä¹å¨)" style="width:32px;height:32px;" /><br />
+            <span>L(åæ¶)</span>
+        </span>
+        <script>_8197._8336(_637, A("_9753"))</script>&nbsp;&nbsp;
+        <script>
+            _878._879(_635, false);
+            function _1407()
+            {
+                _878._879(_637, false);
+            }
+        </script>
+        <br /><br />
+        <span id="_638" style="display:none;">
+            <img src="_603.png" style="width:50px;height:50px;" />
+            <span>L(æç¤ºï¼è¿ç»­æç©ºæ ¼é®è¯å¬)</span>
+        </span>
+        <br /><br />
+        <span id="_639"></span>
+    </span>
+    <span id="_640" style="">
+        <span>L(åé³)</span><br />
+        <span>L(é¢¤é³)</span><br />
+        <input type="file" id="_641" multiple accept="application/*.bin" onchange="_712();" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px 1px 1px 1px);">
+        <label id="_642" for="_641" style="display: inline-block; cursor: pointer; text-align: center;">
+            <img src="_712.png" title="L(æå¼æ¬å°æ¾é³å¨æä»¶æé®æä»¶)" style="width: 48px; height: 48px;" /><br />
+            <span>L(ä¸è½½æ¾é³å¨æä»¶)</span>
+        </label>
+        <script>_8197._8336(_642, A("_9753"))</script>&nbsp;&nbsp;
+        <span id="_643"></span>
+        <script>
+            _1406(_643, 200, 20);
+            _643.style.display = "none";
+        </script>
+        <span id="_644" style="display: none; cursor: pointer; text-align: center;" onclick="_8368();">
+            <img src="_426.png" title="L(åæ¶ä¸è½½å°èªå¨ä¹å¨)" style="width:32px;height:32px;" /><br />
+            <span>L(åæ¶)</span>
+        </span>
+        <script>_8197._8336(_644, A("_9753"))</script>&nbsp;&nbsp;
+        <script>
+            function _8368()
+            {
+                _8369(L("ç¨æ·åæ¶äºæ°æä»¶ä¸è½½"));
+                _878._879(_644, false);
+            }
+        </script>
+        <br /><br />
+        <script>
+            var _8285 = new _933();
+            var _8146 = 0;
+            var _8147 = 0;
+            function _712()
+            {
+                let files;
+                files = _641.files;
+                let length;
+                length = files.length;
+                if (length < 1)
+                    return;
+                let _6972;
+                _6972 = files[0];
+                
+                let _988;
+                _988 = new FileReader();
+                _988.onload = function (buffer)
+                {
+                    _8369(L("è¿æ²¡æå è½½å®ææ°æä»¶"));
+                    if (_8286(_8285, buffer.target.result, _8146, _8147))
+                        _8283();
+                };
+                _988.readAsArrayBuffer(_6972);
+                _641.value = "";
+            }
+        </script>
+        <iframe id="_645" style="display:inline-block; width: 100%; height: calc(100%-200px);"></iframe>
+        <script>
+            function _8370()
+            {
+                if (_645._8371)
+                {
+                    URL.revokeObjectURL(_645._8371);
+                    _645._8371 = null;
+                }
+            }
+            function _8369(_1702)
+            {
+                _8370();
+                _645.src = _645._8371 = URL.createObjectURL(new Blob([_1702], { type: "text/html" }));
+            }
+            function _8149(_939)
+            {
+                _8370();
+                const _987 = new Blob([_939], { type: "text/html; charset=utf-8" });
+                const _8372 = URL.createObjectURL(_987);
+                _645.src = _645._8371 = _8372;
+            }
+            _8369(L("è¿æ²¡æå è½½æä»¶ãæèå è½½æä»¶éè¯¯"));
+        </script>
+    </span>
+    <span id="_646" style="">
+        <div id="_647">L(èçMidié®çåè½æ²¡æå¼å¯)</div>
+        <div id="_648">L(è¿æ²¡æè®¾å¤è¿æ¥å°èæçèçMidié®çï¼æ­£å¨ç­å¾...)</div>
+        <div id="_649">
+            <span>L(èçMidié®çå·²ç»è¿æ¥)</span><br />
+            <span>L(å¯¹æ¹è®¾å¤ä¿¡æ¯ï¼)</span>
+            <span id="_650"></span><br />
+            <button id="_651" onclick="_8327()">L(æ­å¼)</button>
+            <script>_8197._8336(_651, A("_9751"))</script><br />
+            <div style="font-size:smaller;color:gray;">
+                <div>L(æ¬è®¾å¤åä¸æ¶é´ä»åè®¸ä¸ä¸ªçµè/ææºè¿æ¥ã)</div>
+                <div>L(å®åAPP âMIDI+BTLEâ å³é­æåèµ°é½æ æ³å³é­è¿æ¥ï¼)</div>
+                <div>L(æ æ³è®©æ°çµè/ææºè¿æ¥è¿æ¥ã)</div>
+                <div>L(å¦æéè¦æ°çè¿æ¥ï¼è¯·å³é­èææºçèçåè½ã)</div>
+                <div>L(ä¹å¯ä»¥ç¹ä¸é¢çæ­å¼æé®ï¼æ­å¼åèææºè¿æ¥ã)</div>
+            </div>
+        </div>
+        <script>
+            function _8212(_8210, _8211, name)
+            {
+                if (!_8210)
+                {
+                    _647.style.display = "";
+                    _648.style.display = "none";
+                    _649.style.display = "none";
+                }
+                else
+                {
+                    _647.style.display = "none";
+                    if (_8211)
+                    {
+                        _648.style.display = "none";
+                        _649.style.display = "";
+                        _650.innerText = name;
+                    }
+                    else
+                    {
+                        _648.style.display = "";
+                        _649.style.display = "none";
+                        _650.innerText = "";
+                    }
+                }
+            }
+        </script>
+    </span>
+    <span id="_652" style="">
+        <div id="_653" onclick="_8219();" style="cursor:pointer;"><img id="_654" src="_271.png" style="width:32px;height:32px" /><span>L(æ¬å£°å¨)</span></div>
+        <script>_8197._8336(_653, A("_9753"))</script>
+        <div id="_655" onclick="_8220();" style="cursor:pointer;"><img id="_656" src="_271.png" style="width:32px;height:32px" /><span>L(çº¿è·¯è¾åº)</span></div>
+        <script>_8197._8336(_655, A("_9753"))</script>
+        <div id="_657" onclick="_8221();" style="cursor:pointer;"><img id="_658" src="_271.png" style="width:32px;height:32px" /><span>L(è¿æ¥èçé³ç®±æèçè³æº)</span></div>
+        <script>_8197._8336(_657, A("_9753"))</script>
+        <div id="_659" style="position: relative; left: 30px; width: calc(100% - 30px);">
+            <span id="_660">
+                <span id="_661" style=""></span>
+                <span id="_662" style="font-size: smaller"></span>
+                <button id="_663" onclick="_8373();">L(æ­å¼)</button>
+                <script>
+                    _8197._8336(_663, A("_9751"));
+                    async function _8373()
+                    {
+                        await _1170._8176();
+                    }
+                </script>
+            </span>
+            <span id="_664">
+                <span id="_665" style="display: inline-block; border-style: inset; border-width: 2px; margin: 20px; padding: 5px; min-width: 400px; min-height: 170px; width: auto; height: auto;"></span>
+                <script>
+                    function _8374()
+                    {
+                        let _8215;
+                        _8215 = _665.getElementsByTagName("div");
+                        for (let _866 = 0; _866 < _8215.length; _866++)
+                            _8215[_866].style.backgroundColor = "";
+                    }
+                </script>
+                <br />
+                <img id="_666" src="_708.gif" style="width:30px;height:30px;" />
+                <button id="_667" onclick="_8375();">L(æ¥æ¾)</button>
+                <script>
+                    _8197._8336(_667, A("_9751"));
+                    async function _8375()
+                    {
+                        _665.innerHTML = '';
+                        _666.style.display = '';
+                        _669.disabled = true;
+                        _667.disabled = true;
+                        _667._8209 = true;
+                        _8197._8237();
+                        await _1170._8177();
+                    }
+                </script>
+                <img id="_668" src="_726.gif" style="width:30px;height:30px;" />
+                <button id="_669" disabled onclick="_8376.bind(this)();">L(è¿æ¥)</button>
+                <script>
+                    _8197._8336(_669, A("_9751"));
+                    async function _8376()
+                    {
+                        await _8324(this._8377, this._8378);
+                    }
+                </script>
+            </span>
+        </div>
+        <div id="_670" onclick="_8222();" style="cursor:pointer;"><img id="_671" src="_271.png" style="width:32px;height:32px" /><span>L(æ çº¿éº¦åé£ï¼è¿æ¥ææºæçµèï¼éè¦æ¥æ¶å¨ï¼)</span></div>
+        <script>_8197._8336(_670, A("_9753"))</script>
+        <div id="_672" onclick="_8223();" style="cursor:pointer;"><img id="_673" src="_271.png" style="width:32px;height:32px" /><span>L(MIDIï¼èçè¿æ¥ææºæçµèï¼)</span></div>
+        <script>_8197._8336(_672, A("_9753"))</script>
+    </span>
+    <span id="_674" style="">
+        <div style="font-size: x-large; ">L(è½¯ä»¶èä½æ)</div>
+        <div>L(ãä¸è¿åä»ããèªå¨ä¹å¨ãä½èèµµç£ï¼ä¿çè½¯ä»¶èä½æ)</div>
+        <br />
+        <div style="font-size: x-large;">L(ãä¸è¿åä»ããèªå¨ä¹å¨ãç®ä»)</div>
+        <div>L(ä¸è¿åä»ï¼ä¸çä¸æç®çä¹å¨ï¼æ²¡æä¹ä¸ãæ¯éææ¨å¨ä»»æçä¸æ ¹çº¿ï¼å°±èªå¨å¼¹å¥ä¸ä¸ªåç¡®é³é«çé³ç¬¦ã)</div>
+        <div>L(é³ç¬¦è¿æåç§å¤§å¸å±çæå·§ãæ»é³ é¢¤é³ åé³ç­æå·§ä¿®é¥°ï¼é½å¯ä»¥äºåç¼è¾å¥½ãå°±æ¯çåä»ä¹å¼¹ä¸åºæ¥ã)</div>
+        <div>L(ææ¡æ¨å¼¦éåº¦ãåååº¦ï¼å°±è½å¼¹å¥å®æ´çæ²å­ãå¡ç¥ç¬ä¹æ²¡æä¸è¿åä»ç®åãä¸»è¦æ¯ç»ç¾å¥³ç¨çãç¾å¥³ä¸è¬å¤©çå­¦ä¸ä¼åä»äºã)</div>
+        <div>L(ä¸è¿åææ¼äº®å­¦ä¸ä¼åä»çç¾å¥³ã)</div>
+        <br />
+        <div style="font-size: x-large;">L(æ¨¡å)</div>
+        <div><span>L(mp3 è§£ç )</span>Libhelix-mp3, Apache 2.0, https://github.com/chmorgan/esp-libhelix-mp3</div>
+        <br />
+        <div style="font-size: x-large;">L(æºæ¢°å®è£)</div>
+        <button id="_675" onclick="_8232()">L(å®è£çµæº1åä¸)</button>
+        <script>_8197._8336(_675, A("_9751"));</script>
+        <button id="_676" onclick="_8233()">L(å®è£çµæº1åä¸)</button>
+        <script>_8197._8336(_676, A("_9751"));</script>
+        &nbsp;&nbsp;
+        <button id="_677" onclick="_8234()">L(å®è£çµæº2åä¸)</button>
+        <script>_8197._8336(_677, A("_9751"));</script>
+        <button id="_678" onclick="_8235()">L(å®è£çµæº2åä¸)</button>
+        <script>_8197._8336(_678, A("_9751"));</script>
+        &nbsp;&nbsp;
+        <select id="_679"><option selected value="1000">L(1ç§)</option><option value="2000">L(2ç§)</option><option value="5000">L(5ç§)</option></select>
+        <br />
+        <br />
+        <div style="font-size: x-large;">L(åçº§åºä»¶)</div>
+        <span>L(å½ååºä»¶çæ¬ï¼)</span>
+        <span id="_680"></span>
+        <br />
+        <span>L(ææ°åºä»¶çæ¬ï¼)</span>
+        <span id="_681"></span>
+        <br />
+        <span id="_682" style="display: inline-block; cursor: pointer; text-align: center;" onclick="_8281();">
+            <img src="_713.png" title="L(ä¸è½½ææ°åºä»¶)" style="width:64px;height:64px;" /><br />
+            <span>L(åçº§)</span>
+        </span>&nbsp;&nbsp;
+        <script>
+            _8197._8336(_682, A("_9751"));
+            _878._879(_682, false);
+        </script>
+        <br />
+        <span id="_683"></span>
+        <script>_1406(_683, 380, 20); _683.style.display = "none";</script>
+        <br />
+        <span id="_684" style="display: none; cursor: pointer; text-align: center;" onclick="_8379();">
+            <img src="_426.png" title="L(åæ¶ä¸è½½ææ°åºä»¶æé®)" style="width:32px;height:32px;" /><br />
+            <span>L(åæ¶)</span>
+        </span>&nbsp;&nbsp;
+        <script>
+            _8197._8336(_684, A("_9751"));
+            function _8379()
+            {
+                _878._879(_684, false);
+            }
+        </script>
+        <script>
+            var _8208 = new _933();
+            _8272();
+        </script>
+        <br />
+        <br />
+        <span>L(MIDIé©±å¨ä¸è½½ï¼)</span>
+        <div>L(1  Windowsï¼ BLE-MIDI-Bridge + LoopMIDI æ¡¥æ¥)</div>
+        <div>L(åå¯å¨ LoopMIDI ï¼å¨ LoopMIDI éåå»º midi port)</div>
+        <div>L(åå¯å¨ BLE-MIDI-Bridge éæ© ååå»ºç midi port)</div>
+        <div>L(å¨éæ©esp32)</div>
+        <div>L(å¦æBLE-MIDI-Bridge éé¢æ²¡æ  LoopMIDI ç midi port)</div>
+        <div>L(éå¯ Windows MIDI Serviceï¼æææ workaroundï¼)</div>
+        <div>L(æ Win + Rï¼è¾å¥ services.msc å¹¶åè½¦ã)</div>
+        <div>L(æ¾å° Windows MIDI Serviceï¼æå« âMIDI Servicesâï¼ã)</div>
+        <div>L(å³é®å® â éæ°å¯å¨ï¼å Stop å Startï¼ã)</div>
+        <div>L(éå¯åï¼ç«å³ å¨ loopMIDI ä¸­ç¡®è®¤ç«¯å£å­å¨ï¼ç¶åéæ°æå¼ BLE-MIDI Bridge.exeï¼çæ¯å¦è½çå° loopMIDI Portã)</div>
+        <div>L()</div>
+        <div>L(2  å®åï¼MIDI BLE Connect)</div>
+        <div>L(ç¿»å¢åï¼åºç¨ååºæï¼ä¸è½ç¿»å¢ï¼å°±ç¨å½åç®å½ä¸ç)</div>
+        <div>L(3  è¹æï¼å¤©ç¶æ¯æ)</div>
+        <a href="_701/_9756.zip" target="_blank">ble-midi-bridge-windows-x64.zip</a><br />
+        <a href="_701/_9757.zip" target="_blank">loopMIDISetup_1_0_16_27.zip</a><br />
+        <a href="_701/_9758.apk" target="_blank">MIDI BLE Connect_1.4.3_APKPure.apk</a><br />
+        <a href="_701/_9758.xapk" target="_blank">MIDI BLE Connect_1.4.3_APKPure.xapk</a><br />
+        <br />
+        <a href="_9759.html" target="_blank">L(Midié®çæµè¯)</a><br />
+        <br />
+        <br />
+    </span>
+    <span id="_685" style="">
+        <button id="_686" onclick="_8236('input')">L(ç­æå½é³è¾å¥)</button>
+        <script>_8197._8336(_686, A("_9751"));</script>&nbsp;&nbsp;
+        <button id="_687" onclick="_8236('output')">L(ç­æå½é³è¾åº)</button>
+        <script>_8197._8336(_687, A("_9751"));</script><br />
+        <button id="_688" onclick="_8238('input')">L(å¾å°åå²è¾å¥)</button>
+        <script>_8197._8336(_688, A("_9751"));</script>&nbsp;&nbsp;
+        <button id="_689" onclick="_8238('output')">L(å¾å°åå²è¾åº)</button>
+        <script>_8197._8336(_689, A("_9751"));</script><br />
+        <div id="_690" style="display:inline-block;width:100px;height: 15px;"></div>
+        <script>_1406(_690); _690._1160(0, 100); _690.style.display = "none";</script>
+        <br /><br />
+
+        <span id="_691"></span><br />
+        <button id="_692" onclick="_8227()">L(æ´æ°è°è¯ä¿¡æ¯)</button>
+        <script>_8197._8336(_692, A("_9751"));</script>
+        <br /><br />
+        <span id="_693"></span><br />
+        <button id="_694" onclick="_8162()">L(å¾å°cpuå©ç¨ç)</button>
+        <script>_8197._8336(_694, A("_9751"));</script>
+        <br /><br />
+        <span id="_695"></span><br />
+        <button id="_696" onclick="_8163()">L(å¾å°åå­å©ç¨ç)</button>
+        <script>_8197._8336(_696, A("_9751"));</script>
+        <br />
+        <br />
+    </span>
+    <script>
+        function _8380(_1308, _1310)
+        {
+            _1308._8334 = _1308.style.display;
+            _1308.style.position = "absolute";
+            _1308.style.top = (150 + 5) + "px";
+            _1308.style.left = "0";
+            _1308.style.width = "100%";
+            _1308.style.height = "calc(100% - " + (150 - 5) + "px)";
+            _1308.style._8381 = "auto";
+            _1308._1310 = _1310;
+            _1310._1308 = _1308;
+        }
+        _8380(_622, _614);
+        _8380(_628, _615);
+        _8380(_632, _616);
+        _8380(_640, _617);
+        _8380(_646, _618);
+        _8380(_652, _619);
+        _8380(_674, _620);
+        _8380(_685, _621);
+        _614.onclick();
+    </script>
+
+
+    
+    <div style="overflow: auto; width: 100px; height: 100px; position: absolute; right: 0px; bottom: 0px; ">
+        <button id="_697" onclick="_8382()" disabled>Write Value</button>
+        <button id="_698" onclick="_8383()" disabled>Read Characteristic</button>
+        <p>Status: <span id="_699">Disconnected</span></p>
+        <p>Value: <span id="value">N/A</span></p>
+        <p>Log: <span id="_700"></span></p>
+    </div>
+    
+
+    <script>
+
+        TranslateAll();
+
+        function _8384(_1702)
+        {
+            _700.innerHTML += _1702 + "<br/>\r\n";
+        }
+        var _8144 = null;
+        async function _8385()
+        {
+            
+            
+            _627.style.display = "none";
+            _627.disabled = false;
+            _626._1160(0, 10);
+            _625.style.display = "flex";
+            await new Promise(_2303 => { _8144 = _2303; _1170._8166(); });
+            await new Promise(_2303 => { _8144 = _2303; _1170._8170(); });
+            await new Promise(_2303 => { _8144 = _2303; _1170._8168(); });
+            await new Promise(_2303 => { _8144 = _2303; _1170._8169(); });
+            await new Promise(_2303 => { _8144 = _2303; _1170._8167(); });
+            await new Promise(_2303 => { _8144 = _2303; _1170._8171(); });
+
+            _665.innerHTML = "";
+        }
+        function _8386()
+        {
+            _8154();
+            _614._1346();
+            _627.style.display = "";
+            _627.disabled = false;
+            _624.style.display = "none";
+            _625.style.display = "none";
+            
+            _614.onclick();
+        }
+        function _8387()
+        {
+            _8154();
+            _614._1346();
+            _627.style.display = "";
+            _627.disabled = false;
+            _625.style.display = "none";
+            _624.style.display = "none";
+            
+            _614.onclick();
+        }
+        function _8204()
+        {
+            _697.disabled = false;
+            _698.disabled = false;
+            _621.disabled = false;
+            _620.disabled = false;
+
+            _615._1346();
+            _616._1346();
+            _617._1346();
+            _618._1346();
+            _619._1346();
+            _621._1346();
+            _620._1346();
+        }
+        function _8154()
+        {
+            _697.disabled = true;
+            _698.disabled = true;
+            _621.disabled = true;
+            _620.disabled = true;
+
+            
+            _615._8244();
+            _616._8244();
+            _617._8244();
+            _618._8244();
+            _619._8244();
+            _621._8244();
+            _620._8244();
+        }
+
+    </script>
+
+    <script>
+        
+        const _8388 = "SILK_LEG_GUITAR";
+        const _8389 = 0x9578;
+        const _8390 = 0x6710;
+
+        let _8391 = null, _8158 = null;
+
+        _8154();
+
+
+        async function _8392()
+        {
+            if (!navigator.bluetooth)
+            {
+                alert(
+                    L("å½åæµè§å¨æªæ£æµå°èçåè½ãå¯è½åå ï¼\n\n") +
+                    L("1. çµèæ²¡æèçééå¨ï¼\n") +
+                    L("2. èçé©±å¨æªå®è£ï¼\n") +
+                    L("3. å½åæµè§å¨ä¸æ¯æ Web Bluetoothï¼\n") +
+                    L("4. é¡µé¢ä¸æ¯ HTTPS\n") +
+                    L("è¯·å®è£USBèçééå¨åéè¯ã\n\n") +
+                    L("â â â å®è£å®èçééå¨ï¼ä¸å®å·æ°æµè§å¨â â â \n")
+                );
+                return false;
+            }
+            let _8393;
+            _8393 = false;
+            try 
+            {
+                _8393 = await navigator.bluetooth.getAvailability();
+            }
+            catch (_983) 
+            {
+                
+                
+            }
+
+            if (!_8393) 
+            {
+                alert(
+                        L("æ£æµå°èçä¸å¯ç¨ï¼\n\n") +
+                        L("å¯è½åå ï¼\n") +
+                        L("1. æªæå¥ USB èçééå¨\n") +
+                        L("2. èçééå¨é©±å¨æªå®è£æè¢«ç¦ç¨\n") +
+                        L("3. ç³»ç»èçåè½è¢«å³é­\n") +
+                        L("è¯·å®è£USBèçééå¨åéè¯ã\n\n") +
+                        L("â â â å®è£å®èçééå¨ï¼ä¸å®å·æ°æµè§å¨â â â \n") 
+                    );
+                return false;
+            }
+            return true;
+        }
+        async function _8337()
+        {
+            if (!await _8392())
+                return;
+            _627.style.display = "";
+            _627.disabled = true;
+            try
+            {
+                _8391 = await navigator.bluetooth.requestDevice(
+                    {
+                        filters: [{ name: _8388 }],
+                        optionalServices: [_8389]  
+                    });
+                _8384("Device selected: " + _8391);
+                _627.style.display = "none";
+                _624.style.display = "";
+                _8158 = null;
+
+                const _8394 = await _8391.gatt.connect();
+                _8384("GATT server connected: " + _8394);
+
+                const _8395 = await _8394.getPrimaryService(_8389);
+                _8384("Service found:" + _8395);
+
+                _8158 = await _8395.getCharacteristic(_8390);
+                _8384("Characteristic found: " + _8158);
+                _8384("Characteristic UUID: " + _8158._8396);
+
+                
+                try
+                {
+                    await _8158.startNotifications();
+                    _8384("Notifications started successfully");
+                    _8158.addEventListener('characteristicvaluechanged', (event) =>
+                    {
+                        
+                        
+                        
+
+                        let value = event.target.value.buffer;
+                        _1170._1191(value);
+
+                        
+                        
+                        
+                        
+                        
+                        
+                    });
+                }
+                catch (error)
+                {
+                    _8384("Failed to start notifications:" + error);
+                    _8158 = null;
+                    _8391 = null;
+                    throw error;
+                }
+
+
+                _8391.addEventListener('gattserverdisconnected', () =>
+                {
+                    _8384("Device disconnected");
+                    _8387();
+                    _8158 = null;
+                    _8391 = null;
+                });
+
+
+                _8384("Device connected");
+                _8385();
+            }
+            catch (error)
+            {
+                _8384("Error: " + error);
+                if (_8391 == null || _8158 == null)
+                    _8386();
+            }
+        }
+
+        
+        function _981(error, title)
+        {
+            _8384(title + " Error: " + error);
+            document.getElementById("_699").textContent = title + " Error: " + error._3477;
+        }
+        async function _8382()
+        {
+            try
+            {
+                _8197._8237();
+
+                if (!_8158)
+                {
+                    throw new Error("No g_characteristic available");
+                }
+
+                const _8184 = new TextEncoder();
+                const _8397 = _8184.encode("Hello");
+                await _8158.writeValue(_8397);
+                document.getElementById("_9710").textContent = "Hello";
+                document.getElementById("_699").textContent = "Value written";
+                _8384("Write value: Hello");
+
+                _8197._8398();
+            }
+            catch (error)
+            {
+                _981(error, "Write");
+            }
+        }
+
+        async function _8383()
+        {
+            try
+            {
+                _8197._8237();
+
+                if (!_8158)
+                {
+                    throw new Error("No g_characteristic available");
+                }
+                
+                const value = await _8158.readValue();
+                
+                const _8399 = new TextDecoder();
+                const _8400 = _8399.decode(value);
+                
+                document.getElementById("_9710").textContent = _8400;
+                document.getElementById("_699").textContent = "Value read";
+                _8384("Read value: " + _8400);
+
+                _8197._8398();
+            }
+            catch (error)
+            {
+                _981(error, "Read");
+            }
+        }
+                        
+    </script>
+
+</body>
+</html>
+
+
